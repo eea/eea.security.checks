@@ -1,0 +1,315 @@
+{
+    "gioland": [
+        [
+            "colander",
+            "<1.7.0",
+            "0.9.9",
+            "colander 1.7.0 - The URL validator regex has been updated to no longer be vulnerable to a\r\n  catastrophic backtracking that would have led to an infinite loop.",
+            "36856"
+        ],
+        [
+            "werkzeug",
+            "<0.11.11",
+            "0.8.3",
+            "Cross-site scripting (XSS) vulnerability in the render_full function in debug/tbtools.py in the debugger in Pallets Werkzeug before 0.11.11 (as used in Pallets Flask and other products) allows remote attackers to inject arbitrary web script or HTML via a field that contains an exception message.",
+            "35661"
+        ]
+    ],
+    "ldaplog": [
+        [
+            "flask",
+            "<0.12.3",
+            "0.10.1",
+            "flask version Before 0.12.3 contains a CWE-20: Improper Input Validation vulnerability in flask that can result in Large amount of memory usage possibly leading to denial of service. This attack appear to be exploitable via Attacker provides JSON data in incorrect encoding. This vulnerability appears to have been fixed in 0.12.3.",
+            "36388"
+        ],
+        [
+            "werkzeug",
+            "<0.11.11",
+            "0.10.4",
+            "Cross-site scripting (XSS) vulnerability in the render_full function in debug/tbtools.py in the debugger in Pallets Werkzeug before 0.11.11 (as used in Pallets Flask and other products) allows remote attackers to inject arbitrary web script or HTML via a field that contains an exception message.",
+            "35661"
+        ],
+        [
+            "flask-admin",
+            "<1.3.0",
+            "1.1.0",
+            "flask-admin  1.3.0 fixes a XSS vulnerability in column_editable_list values.",
+            "25821"
+        ]
+    ],
+    "eea.docker.tct": [
+        [
+            "django",
+            "<1.11.19,>=1.11.0",
+            "1.11.4",
+            "Django 1.11.x before 1.11.19 allows Uncontrolled Memory Consumption via a malicious attacker-supplied value to the django.utils.numberformat.format() function.",
+            "36885"
+        ],
+        [
+            "requests",
+            "<=2.19.1",
+            "2.9.0",
+            "The Requests package before 2.19.1 sends an HTTP Authorization header to an http URI upon receiving a same-hostname https-to-http redirect, which makes it easier for remote attackers to discover credentials by sniffing the network.",
+            "36546"
+        ]
+    ],
+    "art17-consultation": [
+        [
+            "colander",
+            "<1.7.0",
+            "0.9.9",
+            "colander 1.7.0 - The URL validator regex has been updated to no longer be vulnerable to a\r\n  catastrophic backtracking that would have led to an infinite loop.",
+            "36856"
+        ],
+        [
+            "flask",
+            "<0.12.3",
+            "0.10.1",
+            "flask version Before 0.12.3 contains a CWE-20: Improper Input Validation vulnerability in flask that can result in Large amount of memory usage possibly leading to denial of service. This attack appear to be exploitable via Attacker provides JSON data in incorrect encoding. This vulnerability appears to have been fixed in 0.12.3.",
+            "36388"
+        ],
+        [
+            "jinja2",
+            "<2.7.3",
+            "2.7.2",
+            "The default configuration for bccache.FileSystemBytecodeCache in Jinja2 before 2.7.2 does not properly create temporary files, which allows local users to gain privileges via a crafted .cache file with a name starting with __jinja2_ in /tmp.",
+            "25866"
+        ],
+        [
+            "pillow",
+            "<2.3.2",
+            "2.3.1",
+            "pillow before 2.3.2 is vulnerable to a DOS in the IcnsImagePlugin.",
+            "25932"
+        ],
+        [
+            "requests",
+            "<2.3.0",
+            "2.2.1",
+            "requests before 2.3.0 exposes Authorization or Proxy-Authorization headers on redirect.\r\n  Fix CVE-2014-1829 and CVE-2014-1830 respectively",
+            "26101"
+        ],
+        [
+            "werkzeug",
+            "<0.11.11",
+            "0.9.4",
+            "Cross-site scripting (XSS) vulnerability in the render_full function in debug/tbtools.py in the debugger in Pallets Werkzeug before 0.11.11 (as used in Pallets Flask and other products) allows remote attackers to inject arbitrary web script or HTML via a field that contains an exception message.",
+            "35661"
+        ]
+    ],
+    "gemet": [
+        [
+            "django",
+            ">=1.10,<1.10.7",
+            "1.10.6",
+            "CVE-2017-7233: Open redirect and possible XSS attack via user-supplied numeric redirect URLs\r\n============================================================================================\r\n\r\nDjango relies on user input in some cases  (e.g.\r\n:func:`django.contrib.auth.views.login` and :doc:`i18n </topics/i18n/index>`)\r\nto redirect the user to an \"on success\" URL. The security check for these\r\nredirects (namely ``django.utils.http.is_safe_url()``) considered some numeric\r\nURLs (e.g. ``http:999999999``) \"safe\" when they shouldn't be.\r\n\r\nAlso, if a developer relies on ``is_safe_url()`` to provide safe redirect\r\ntargets and puts such a URL into a link, they could suffer from an XSS attack.\r\n\r\nCVE-2017-7234: Open redirect vulnerability in ``django.views.static.serve()``\r\n=============================================================================\r\n\r\nA maliciously crafted URL to a Django site using the\r\n:func:`~django.views.static.serve` view could redirect to any other domain. The\r\nview no longer does any redirects as they don't provide any known, useful\r\nfunctionality.\r\n\r\nNote, however, that this view has always carried a warning that it is not\r\nhardened for production use and should be used only as a development aid.",
+            "33300"
+        ],
+        [
+            "jinja2",
+            "<2.7.3",
+            "2.7.2",
+            "The default configuration for bccache.FileSystemBytecodeCache in Jinja2 before 2.7.2 does not properly create temporary files, which allows local users to gain privileges via a crafted .cache file with a name starting with __jinja2_ in /tmp.",
+            "25866"
+        ],
+        [
+            "requests",
+            "<2.6.0",
+            "2.3.0",
+            "requests 2.6.0 fixes handling of cookies on redirect. Previously a cookie without a host value set would use the hostname for the redirected URL exposing requests users to session fixation attacks and potentially cookie stealing.",
+            "26102"
+        ]
+    ],
+    "flis.flip": [
+        [
+            "django",
+            ">=1.10,<1.10.3",
+            "1.10.2",
+            "Django 1.10.3 fixes two security issues and several bugs in 1.10.2.\r\n\r\nUser with hardcoded password created when running tests on Oracle\r\n=================================================================\r\n\r\nWhen running tests with an Oracle database, Django creates a temporary database\r\nuser. In older versions, if a password isn't manually specified in the database\r\nsettings ``TEST`` dictionary, a hardcoded password is used. This could allow\r\nan attacker with network access to the database server to connect.\r\n\r\nThis user is usually dropped after the test suite completes, but not when using\r\nthe ``manage.py test --keepdb`` option or if the user has an active session\r\n(such as an attacker's connection).\r\n\r\nA randomly generated password is now used for each test run.\r\n\r\nDNS rebinding vulnerability when ``DEBUG=True``\r\n===============================================",
+            "25722"
+        ],
+        [
+            "pycrypto",
+            "<=2.6.1",
+            "2.6.1",
+            "Heap-based buffer overflow in the ALGnew function in block_templace.c in Python Cryptography Toolkit (aka pycrypto) 2.6.1 allows remote attackers to execute arbitrary code as demonstrated by a crafted iv parameter to cryptmsg.py.",
+            "35015"
+        ],
+        [
+            "requests",
+            "<=2.19.1",
+            "2.11.1",
+            "The Requests package before 2.19.1 sends an HTTP Authorization header to an http URI upon receiving a same-hostname https-to-http redirect, which makes it easier for remote attackers to discover credentials by sniffing the network.",
+            "36546"
+        ],
+        [
+            "supervisor",
+            "<3.0.1",
+            "3.0",
+            "In supervisor before 3.3.3 (fix backported to 3.2.4, 3.1.4 and 3.0.1) a vulnerability was found where an authenticated client can send a malicious XML-RPC request to ``supervisord`` that will run arbitrary shell commands on the server. The commands will be run as the same user as ``supervisord``.  Depending on how ``supervisord`` has been configured, this may be root.  See https://github.com/Supervisor/supervisor/issues/964 for details.",
+            "34840"
+        ]
+    ],
+    "flis.horizon-scanning-tool": [
+        [
+            "django",
+            ">=1.10,<1.10.3",
+            "1.10.2",
+            "Django 1.10.3 fixes two security issues and several bugs in 1.10.2.\r\n\r\nUser with hardcoded password created when running tests on Oracle\r\n=================================================================\r\n\r\nWhen running tests with an Oracle database, Django creates a temporary database\r\nuser. In older versions, if a password isn't manually specified in the database\r\nsettings ``TEST`` dictionary, a hardcoded password is used. This could allow\r\nan attacker with network access to the database server to connect.\r\n\r\nThis user is usually dropped after the test suite completes, but not when using\r\nthe ``manage.py test --keepdb`` option or if the user has an active session\r\n(such as an attacker's connection).\r\n\r\nA randomly generated password is now used for each test run.\r\n\r\nDNS rebinding vulnerability when ``DEBUG=True``\r\n===============================================",
+            "25722"
+        ],
+        [
+            "requests",
+            "<=2.19.1",
+            "2.11.1",
+            "The Requests package before 2.19.1 sends an HTTP Authorization header to an http URI upon receiving a same-hostname https-to-http redirect, which makes it easier for remote attackers to discover credentials by sniffing the network.",
+            "36546"
+        ]
+    ],
+    "art12-viewer": [
+        [
+            "colander",
+            "<1.7.0",
+            "0.9.9",
+            "colander 1.7.0 - The URL validator regex has been updated to no longer be vulnerable to a\r\n  catastrophic backtracking that would have led to an infinite loop.",
+            "36856"
+        ],
+        [
+            "flask",
+            "<0.12.3",
+            "0.10.1",
+            "flask version Before 0.12.3 contains a CWE-20: Improper Input Validation vulnerability in flask that can result in Large amount of memory usage possibly leading to denial of service. This attack appear to be exploitable via Attacker provides JSON data in incorrect encoding. This vulnerability appears to have been fixed in 0.12.3.",
+            "36388"
+        ],
+        [
+            "werkzeug",
+            "<0.11.11",
+            "0.9.6",
+            "Cross-site scripting (XSS) vulnerability in the render_full function in debug/tbtools.py in the debugger in Pallets Werkzeug before 0.11.11 (as used in Pallets Flask and other products) allows remote attackers to inject arbitrary web script or HTML via a field that contains an exception message.",
+            "35661"
+        ],
+        [
+            "requests",
+            "<2.6.0",
+            "2.4.1",
+            "requests 2.6.0 fixes handling of cookies on redirect. Previously a cookie without a host value set would use the hostname for the redirected URL exposing requests users to session fixation attacks and potentially cookie stealing.",
+            "26102"
+        ]
+    ],
+    "eea.seris": [
+        [
+            "flask",
+            "<0.12.3",
+            "0.8",
+            "flask version Before 0.12.3 contains a CWE-20: Improper Input Validation vulnerability in flask that can result in Large amount of memory usage possibly leading to denial of service. This attack appear to be exploitable via Attacker provides JSON data in incorrect encoding. This vulnerability appears to have been fixed in 0.12.3.",
+            "36388"
+        ],
+        [
+            "jinja2",
+            "<2.7.2",
+            "2.6",
+            "jinja2 2.7.2 fixes a security issue: Changed the default folder for the filesystem cache to be user specific and read and write protected on UNIX systems.  See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=734747 for more information.",
+            "25865"
+        ],
+        [
+            "werkzeug",
+            "<0.11.11",
+            "0.8.3",
+            "Cross-site scripting (XSS) vulnerability in the render_full function in debug/tbtools.py in the debugger in Pallets Werkzeug before 0.11.11 (as used in Pallets Flask and other products) allows remote attackers to inject arbitrary web script or HTML via a field that contains an exception message.",
+            "35661"
+        ],
+        [
+            "requests",
+            "<2.3.0",
+            "0.11.1",
+            "requests before 2.3.0 exposes Authorization or Proxy-Authorization headers on redirect.\r\n  Fix CVE-2014-1829 and CVE-2014-1830 respectively",
+            "26101"
+        ]
+    ],
+    "eea.corpus": [
+        [
+            "numpy",
+            "<=1.16.0",
+            "1.12.1",
+            "An issue was discovered in NumPy 1.16.0 and earlier. It uses the pickle Python module unsafely, which allows remote attackers to execute arbitrary code via a crafted serialized object, as demonstrated by a numpy.load call.",
+            "36810"
+        ],
+        [
+            "requests",
+            "<=2.19.1",
+            "2.13.0",
+            "The Requests package before 2.19.1 sends an HTTP Authorization header to an http URI upon receiving a same-hostname https-to-http redirect, which makes it easier for remote attackers to discover credentials by sniffing the network.",
+            "36546"
+        ],
+        [
+            "colander",
+            "<1.7.0",
+            "1.4",
+            "colander 1.7.0 - The URL validator regex has been updated to no longer be vulnerable to a\r\n  catastrophic backtracking that would have led to an infinite loop.",
+            "36856"
+        ],
+        [
+            "flask",
+            "<0.12.3",
+            "0.12.2",
+            "flask version Before 0.12.3 contains a CWE-20: Improper Input Validation vulnerability in flask that can result in Large amount of memory usage possibly leading to denial of service. This attack appear to be exploitable via Attacker provides JSON data in incorrect encoding. This vulnerability appears to have been fixed in 0.12.3.",
+            "36388"
+        ],
+        [
+            "numpy",
+            "<=1.16.0",
+            "1.14.1",
+            "An issue was discovered in NumPy 1.16.0 and earlier. It uses the pickle Python module unsafely, which allows remote attackers to execute arbitrary code via a crafted serialized object, as demonstrated by a numpy.load call.",
+            "36810"
+        ],
+        [
+            "requests",
+            "<=2.19.1",
+            "2.18.4",
+            "The Requests package before 2.19.1 sends an HTTP Authorization header to an http URI upon receiving a same-hostname https-to-http redirect, which makes it easier for remote attackers to discover credentials by sniffing the network.",
+            "36546"
+        ],
+        [
+            "urllib3",
+            "<1.23",
+            "1.22",
+            "urllib3 before 1.23 does not remove the Authorization HTTP header when following a cross-origin redirect (i.e., a redirect that differs in host, port, or scheme). This can allow for credentials in the Authorization header to be exposed to unintended hosts or transmitted in cleartext.",
+            "36541"
+        ]
+    ],
+    "eea.docker.flis": [
+        [
+            "django",
+            "<1.11.19,>=1.11.0",
+            "1.11.3",
+            "Django 1.11.x before 1.11.19 allows Uncontrolled Memory Consumption via a malicious attacker-supplied value to the django.utils.numberformat.format() function.",
+            "36885"
+        ]
+    ],
+    "fise.nfi.search": [
+        [
+            "requests",
+            "<=2.19.1",
+            "2.18.4",
+            "The Requests package before 2.19.1 sends an HTTP Authorization header to an http URI upon receiving a same-hostname https-to-http redirect, which makes it easier for remote attackers to discover credentials by sniffing the network.",
+            "36546"
+        ],
+        [
+            "rdflib",
+            "==4.2.2",
+            "4.2.2",
+            "The CLI tools in RDFLib 4.2.2 can load Python modules from the current working directory, allowing code injection, because \"python -m\" looks in this directory, as demonstrated by rdf2dot.",
+            "36882"
+        ]
+    ],
+    "inspire.harvest.feasibility.tools": [
+        [
+            "requests",
+            "<=2.19.1",
+            "2.19.1",
+            "The Requests package before 2.19.1 sends an HTTP Authorization header to an http URI upon receiving a same-hostname https-to-http redirect, which makes it easier for remote attackers to discover credentials by sniffing the network.",
+            "36546"
+        ]
+    ]
+}
