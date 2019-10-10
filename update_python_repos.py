@@ -39,7 +39,7 @@ def get_python_repos():
 
 
 def write_repos(output_file, repo_names):
-    with open(output_file, 'w+') as f:
+    with open(output_file, 'w') as f:
         f.write('\n'.join(repo_names))
 
 
