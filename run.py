@@ -1,103 +1,142 @@
 import json
 import time
+import logging
 import requests
 import subprocess
 
 from settings import TOKEN
+from constants import *
 
-PER_PAGE = 100
 
-headers = {'Authorization': f'token {TOKEN}'}
+def get_repo_url(repo):
+    repo = repo.strip()
 
-full_report = {}
+    logging.info(f"Safety checking {repo}...")
+    search_repo_url = (
+        f"https://api.github.com/search/code?q=+repo:"
+        f"eea/{repo}+filename:requirements.txt"
+    )
 
-python_repos_no_req = 0
+    return search_repo_url
 
-python_repos_with_req = []
 
-python_repos_failed = []
+def make_request(url, params=None):
+    headers = {'Authorization': f'token {TOKEN}'}
+    return requests.get(url, params=params, headers=headers)
 
-with open("python_repos.txt") as f:
-    for repo in f:
-        repo = repo.strip()
-        
-        print(f"Safety checking {repo}...")
-        search_repo_url = (
-            f"https://api.github.com/search/code?q=+repo:"
-            f"eea/{repo}+filename:requirements.txt"
+
+def api_limit_reached(response):
+    if not response.ok:
+        return True
+
+    if response.headers and response.headers['X-RateLimit-Remaining']:
+        # Remaining rate limit should be greater than 1, as a new request will be
+        # made to the repo to extract the requirements.txt content
+        return int(response.headers['X-RateLimit-Remaining']) < 1
+
+    return False
+
+
+def vulnerable_requirement(requirement):
+    if "==" in requirement:
+        task = subprocess.Popen(
+            f"echo {requirement} | safety check --stdin --json", shell=True, stdout=subprocess.PIPE
         )
 
-        results = requests.get(
-            search_repo_url, params={'page': 1, 'per_page': PER_PAGE},
-            headers=headers
-        )
+        req_vulnerability = json.loads((task.communicate()[0]).decode())
+        return req_vulnerability[0] if req_vulnerability else None
+    return False
 
-        # Github API limit: 30 requests/minute
-        time.sleep(2)
 
-        if results.status_code != 200 or int(results.headers['X-RateLimit-Remaining']) < 1:
-            # Remaining rate limit should be greater than 1, as a new request will be
-            # made to the repo to extract the requirements.txt content
+def repo_vulnerable_packages(repo, repo_items):
 
-            print(results.status_code)
-            continue
-
-            print("API limit reached. Waiting for an hour.")
-            time.sleep(3601)
-            results = requests.get(
-                search_repo_url, params={'page': 1, 'per_page': PER_PAGE},
-                headers=headers
+    vulnerable_pkgs = []
+    for item in repo_items:
+        if item['name'] == requirements_file:
+            requirements_url = item['html_url'].replace(
+                'https://github.com/',
+                'https://raw.githubusercontent.com/'
             )
+            requirements_url = requirements_url.replace('/blob', '')
+            requirements = (requests.get(requirements_url)).text
 
-            if results.status_code != 200:
-                # If second try did not work, stop
-                python_repos_failed.append(repo)
-                continue
+            for requirement in requirements.splitlines():
+                vulnerability = vulnerable_requirement(requirement)
+                if vulnerability:
+                    vulnerable_pkgs.append(vulnerability)
 
-        items = results.json()['items']
-        
-        if not items:
-            python_repos_no_req += 1
-            print(f"Couldn't find a requirements file for repo {repo}.")
-        else:
-            python_repos_with_req.append(repo)
+            logging.info(
+                f"Found {len(vulnerable_pkgs)} vulnerabilities in repo {repo}.")
 
-        vulnerable_pkgs = []
-        for result in items:
-            if result['name'] == 'requirements.txt':
-                requirements_url = result['html_url'].replace(
-                    'https://github.com/',
-                    'https://raw.githubusercontent.com/'
-                )
-                requirements_url = requirements_url.replace('/blob', '')
-                resp = requests.get(requirements_url, headers=headers)
-                requirements = resp.text
-                
-                for requirement in requirements.splitlines():
-                    if '==' in requirement:
-                        task = subprocess.Popen(
-                            f"echo {requirement} | safety check --stdin --json",
-                            shell=True, stdout=subprocess.PIPE
-                        )
+            return vulnerable_pkgs
 
-                        req_vulnerability = json.loads((task.communicate()[0]).decode())
-                        if (req_vulnerability):
-                            vulnerable_pkgs.append(req_vulnerability[0])
-                
-                print(f"Found {len(vulnerable_pkgs)} vulnerabilities in repo {repo}.")
+
+def check_repos(repos_file):
+    python_repos_no_req = []
+    python_repos_with_req = []
+    python_repos_failed = []
+    python_repos_with_issues = {}
+
+    with open(repos_file) as f:
+        for repo in f:
+
+            # Github API limit: 30 requests/minute
+            results = make_request(get_repo_url(repo), git_api_params)
+            time.sleep(2)
+
+            if api_limit_reached(results):
+
+                logging.info("API limit reached. Waiting for an hour.")
+                time.sleep(3601)
+                results = make_request(get_repo_url(repo), git_api_params)
+
+                if not results.ok:
+                    # If second try did not work, stop
+                    python_repos_failed.append(repo)
+                    continue
+
+            repo_items = results.json()['items']
+
+            if not repo_items:
+                logging.info(f"No requirements file in {repo}")
+                python_repos_no_req.append(repo)
+            else:
+                python_repos_with_req.append(repo)
+
+                vulnerable_pkgs = repo_vulnerable_packages(repo, repo_items)
                 if vulnerable_pkgs:
-                    full_report[repo] = vulnerable_pkgs
+                    python_repos_with_issues[repo] = vulnerable_pkgs
 
-print("=== FINISHED PROCESSING ===")
-print(f"{python_repos_no_req} Python repos with no requirement files.")
-print(
-    f"Python repos we couldn't analyze because of API errors: "
-    f"{python_repos_failed}"
-)
-print(f"Python repos with requirements: {python_repos_with_req}")
+    return python_repos_no_req, python_repos_with_req, python_repos_failed, python_repos_with_issues
 
-print("=== FULL REPORT ===")
-report_content = json.dumps(full_report, indent=4)
-print(report_content)
-with open("report.json","w+") as f:
-    f.write(report_content)
+
+def save_report(report_file, no_req, with_req, failed, with_issues):
+    logging.info("=== FINISHED PROCESSING ===")
+    logging.info(
+        f"Python repos with no requirement files: "
+        f"{no_req}")
+    logging.info(
+        f"Python repos we couldn't analyze because of API errors: "
+        f"{failed}"
+    )
+    logging.info(
+        f"Python repos with requirements: "
+        f"{with_req}"
+    )
+
+    print("=== FULL REPORT ===")
+    report_content = json.dumps(with_issues, indent=4)
+    logging.info(with_issues)
+    with open(report_file, "w+") as f:
+        f.write(report_content)
+
+
+def main():
+    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+
+    no_req, with_req, failed, with_issues = check_repos(python_repos_file)
+    save_report(report_file, no_req, with_req, failed, with_issues)
+
+
+if __name__ == '__main__':
+    main()

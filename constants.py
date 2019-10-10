@@ -3,6 +3,9 @@ PER_PAGE = 100
 # Github constants
 eea_repos = 'https://api.github.com/orgs/eea/repos'
 python_repos_file = 'python_repos.txt'
+requirements_file = 'requirements.txt'
+
+git_api_params = {'page': 1, 'per_page': PER_PAGE}
 
 
 # Redmine constants
