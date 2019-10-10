@@ -32,7 +32,7 @@ def get_python_repos():
         if 'next' not in repos.links:
             break
 
-        current_ul = repos.links['next']['url']
+        current_url = repos.links['next']['url']
         page += 1
 
     return python_repos
