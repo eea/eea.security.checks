@@ -21,11 +21,8 @@ locally using the `safety` package.
 
         python run.py
 
-This will generate a `report.json` with the results.
+This will generate a `report.json` with the results if -s argument is used. The results will be published on redmine helpdesk.
 
-* Run the script to post the warnings on the redmine page (helpdesk)
-
-        python post_warnings_redmine.py
 
 ## Limitations
 
