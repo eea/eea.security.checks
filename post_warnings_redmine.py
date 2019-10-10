@@ -2,7 +2,6 @@ import json
 import os
 import sys
 import time
-import getopt
 import logging
 import argparse
 from redminelib import Redmine
