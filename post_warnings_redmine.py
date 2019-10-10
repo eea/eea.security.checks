@@ -12,8 +12,6 @@ input_file = "report.json"
 PACKAGE_NAME = 0
 AFFECTED_VERSIONS = 1
 CURRENT_VERSION = 2
-VULNERABILITY_DETAILS = 3
-VULNERABILITY_ID = 4
 
 
 def write_page(content):
@@ -22,7 +20,7 @@ def write_page(content):
     projectName = 'interne'
     pageName = 'eea repos - security issues'
     server = Redmine(server, key=apikey, requests={'verify': True})
-  
+
     server.wiki_page.update(pageName, project_id=projectName, text=content)
 
 
@@ -66,17 +64,15 @@ if __name__ == '__main__':
 
             content.append('\nh2. "{}":{}\n'.format(repo, repo_url))
             content.append(
-                '|_. Package |_. Current Version |_. Affected Versions |_. Security ID |')
+                '|_. Package |_. Current Version |_. Affected Versions |')
 
             for security_issue in report[repo]:
                 package_name = security_issue[PACKAGE_NAME]
                 affected_versions = security_issue[AFFECTED_VERSIONS]
                 current_version = security_issue[CURRENT_VERSION]
-                details = security_issue[VULNERABILITY_DETAILS]
-                vulnerability_id = security_issue[VULNERABILITY_ID]
 
-                content.append('| {} | {} | {} | {} |'.format(
-                    package_name, current_version, affected_versions, vulnerability_id))
+                content.append('| {} | {} | {} |'.format(
+                    package_name, current_version, affected_versions))
 
     if dryrun:
         write_stdout("\n".join(content))

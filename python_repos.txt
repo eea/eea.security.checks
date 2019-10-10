@@ -189,3 +189,4 @@ ckanapi
 eea.docker.resourcetest
 eea.docker.rancher2redmine
 plone.app.imaging
+eea.security.checks

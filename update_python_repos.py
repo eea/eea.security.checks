@@ -3,34 +3,49 @@ import requests
 import subprocess
 
 from settings import TOKEN
+from constants import *
 
-PER_PAGE = 100
-
-page = 1
 
 headers = {'Authorization': f'token {TOKEN}'}
 
-repos = requests.get(
-    'https://api.github.com/orgs/eea/repos',
-    params={'page': page, 'per_page': PER_PAGE},
-    headers=headers
-)
-repo_list = []
 
-if repos.status_code == 200:
-    print(repos)
+def make_request(url, params, headers):
+    return requests.get(url, params=params, headers=headers)
+
+
+def get_python_repos():
+
+    page = 1
+    current_url = eea_repos
+    python_repos = []
+
     while True:
-        for repo in repos.json():
-            if repo['language'] == 'Python':
-                repo_list.append(repo['name'])
-                print(repo['name'])
+        repos = make_request(
+            current_url, {'page': page, 'per_page': PER_PAGE}, headers)
+
+        if not repos.ok:
+            break
+
+        python_repos += [repo['name'] for repo in repos.json()
+                         if repo['language'] == 'Python']
+
         if 'next' not in repos.links:
             break
+
+        current_ul = repos.links['next']['url']
         page += 1
-        repos = requests.get(
-            repos.links['next']['url'],
-            params={'page': page, 'per_page': PER_PAGE},
-            headers=headers
-        )
-    with open('python_repos.txt', 'w+') as f:
-        f.write('\n'.join(repo_list))
+
+    return python_repos
+
+
+def write_repos(output_file, repo_names):
+    with open(output_file, 'w+') as f:
+        f.write('\n'.join(repo_names))
+
+
+def main():
+    write_repos(python_repos_file, get_python_repos())
+
+
+if __name__ == '__main__':
+    main()
