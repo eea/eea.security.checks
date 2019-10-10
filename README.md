@@ -13,15 +13,19 @@ locally using the `safety` package.
 
         pip install -r requirements.txt
 
-* Create a `settings.py` file based on the example and update it with your token:
+* Create a `settings.py` file based on the example and update it with your GITHUB TOKEN and helpdesk API KEY:
 
         cp settings.py.example settings.py
 
-* Run the script
+* Run the script to extract the warnings
 
         python run.py
 
 This will generate a `report.json` with the results.
+
+* Run the script to post the warnings on the redmine page (helpdesk)
+
+        python post_warnings_redmine.py
 
 ## Limitations
 
