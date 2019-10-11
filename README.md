@@ -25,7 +25,7 @@ locally using the `safety` package.
 
         python run.py
 
-This will generate a `report.json` with the results if -s argument is used. The results will be published on redmine helpdesk.
+This will post on the redmine page defined in constants.py, a report with the repos having security issues and the packages having those issues. If ran with -s argument, a report.json file is also generated.
 
 
 ## Limitations
