@@ -1,3 +1,5 @@
+![Travis](https://travis-ci.org/eea/eea.security.checks.svg?branch=master)
+
 [![Coverage Status](https://coveralls.io/repos/github/eea/eea.security.checks/badge.svg?branch=master)](https://coveralls.io/github/eea/eea.security.checks?branch=master)
 
 # EEA Security Checks
