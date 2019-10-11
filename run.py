@@ -4,6 +4,7 @@ import logging
 import argparse
 import requests
 import subprocess
+import shlex
 from redminelib import Redmine
 
 from settings import TOKEN, API_KEY
@@ -44,7 +45,7 @@ def api_limit_reached(response):
 def vulnerable_requirement(requirement):
     if "==" in requirement:
         task = subprocess.Popen(
-            f"safety check --stdin --json", stdin=subprocess.PIPE, stdout=subprocess.PIPE
+            shlex.split("safety check --stdin --json"), stdin=subprocess.PIPE, stdout=subprocess.PIPE
         )
 
         task.stdin.write(requirement.encode())
