@@ -3,6 +3,7 @@ python:
         - "3.6"
 install:
         - pip install -r requirements.txt
+        - pip install pytest-cov==1.8.1 coverage==3.7.1 coveralls==0.5
 before_script:
         - cp settings.py.example settings.py
 script:
