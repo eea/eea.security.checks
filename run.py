@@ -44,7 +44,7 @@ def api_limit_reached(response):
 def vulnerable_requirement(requirement):
     if "==" in requirement:
         task = subprocess.Popen(
-            "safety check --stdin --json", stdin=subprocess.PIPE, stdout=subprocess.PIPE
+            f"safety check --stdin --json", stdin=subprocess.PIPE, stdout=subprocess.PIPE
         )
 
         task.stdin.write(requirement.encode())
