@@ -36,7 +36,7 @@ def api_limit_reached(response):
     if response.headers and response.headers.get('X-RateLimit-Remaining', None):
         # Remaining rate limit should be greater than 1, as a new request will be
         # made to the repo to extract the requirements.txt content
-        return int(response.headers['X-RateLimit-Remaining']) < 1
+        return int(response.headers['X-RateLimit-Remaining']) < 2
 
     return False
 
@@ -53,7 +53,7 @@ def vulnerable_requirement(requirement):
         task.stdin.close()
 
         return req_vulnerability[0] if req_vulnerability else None
-    return False
+    return None
 
 
 def repo_vulnerable_packages(repo, repo_items):
