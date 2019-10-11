@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/eea/eea.security.checks/badge.svg?branch=master)](https://coveralls.io/github/eea/eea.security.checks?branch=master)
+
 # EEA Security Checks
 
 This is a simple script that access the GitHub API and tries to find all Python
